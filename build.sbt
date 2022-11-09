@@ -1,6 +1,6 @@
 // See README.md for license details.
 
-ThisBuild / scalaVersion     := "2.13.8"
+ThisBuild / scalaVersion     := "2.12.15"
 ThisBuild / version          := "0.1.0"
 ThisBuild / organization     := "com.github.yuxuanz19"
 
@@ -11,7 +11,8 @@ lazy val root = (project in file("."))
     name := "uintc",
     libraryDependencies ++= Seq(
       "edu.berkeley.cs" %% "chisel3" % chiselVersion,
-      "edu.berkeley.cs" %% "chiseltest" % "0.5.4" % "test"
+      "edu.berkeley.cs" %% "chiseltest" % "0.5.4" % "test",
+      "edu.berkeley.cs" %% "rocketchip" % "1.2.6"
     ),
     scalacOptions ++= Seq(
       "-language:reflectiveCalls",
