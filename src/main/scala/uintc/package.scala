@@ -3,13 +3,13 @@ import chisel3.util._
 import chipsalliance.rocketchip.config
 
 package object uintc {
-    class Index(socketCount: Int) extends Bundle {
-        val src = UInt(log2Ceil(socketCount).W)
-        val dst = UInt(log2Ceil(socketCount).W)
+    class Index(implicit p: config.Parameters) extends Bundle {
+        val src = UInt(p(LG2_SOCKET_CNT).W)
+        val dst = UInt(p(LG2_SOCKET_CNT).W)
     }
 
     class Info(implicit p: config.Parameters) extends Bundle {
-        val idx = new Index(p(SOCKET_CNT))
-        val op = UInt(3.W) // 0xx enable 1xx pending
+        val idx = new Index
+        val op = UInt(3.W) // 0xx set enable, 1xx set pending
     }
 }
