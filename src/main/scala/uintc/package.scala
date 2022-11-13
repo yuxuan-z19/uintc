@@ -8,7 +8,7 @@ package object uintc {
         val dst = UInt(p(LG2_SOCKET_CNT).W)
     }
 
-    class Info(implicit p: config.Parameters) extends Bundle {
+    class Request(implicit p: config.Parameters) extends Bundle {
         val idx = new Index
         val op = UInt(3.W) // 0xx set enable, 1xx set pending
     }
