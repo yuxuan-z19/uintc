@@ -31,7 +31,7 @@ class RecverPort(implicit p: config.Parameters) extends Module {
     (io.recver_claim zip io.request_recv) foreach {
         case (claim, recv) => {
             claim.bits := recv.bits
-            claim.valid := recv.valid && io.request_disable(recv.bits) === true.B
+            claim.valid := recv.valid && io.request_disable(recv.bits) === false.B
             recv.ready := Mux(io.request_disable(recv.bits) === true.B, true.B, claim.ready)
                 // if it's disabled just ignore it
         }
@@ -61,11 +61,11 @@ class EnableMap(implicit p: config.Parameters) extends Module {
     val bit_set = 1.U << dst_id
     val op = io.src_request.bits.op(1, 0)
     when(io.src_request.valid && !io.src_request.bits.op(2)) {
-        when(op === "b00".U) {
+        when(op === "b01".U) {
             bitmap(src_id) := bitmap(src_id) | bit_set // set
         }.elsewhen(io.src_request.bits.op(1, 0) === "b11".U) {
             bitmap(src_id) := 0.U // clear
-        }.elsewhen(op === "b01".U) {
+        }.elsewhen(op === "b00".U) {
             bitmap(src_id) := bitmap(src_id) & ~bit_set // unset
         }.otherwise {}
     }
